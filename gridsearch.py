@@ -120,16 +120,15 @@ if __name__ == '__main__':
 
   n_test = 12*6
 
-  filename = sys.argv[1]
-  filename = 'co2range.csv'
+  #filename = sys.argv[1] edit this in to run from command line
+  filename = 'ensorange.csv'#'co2range.csv'
 
-  #sys.argv[1]
   if filename == 'anomalyrange.csv':
     
     data = read_csv('gridsearch_data/anomalyrange.csv').anomaly.values
 
-    cfg_list = sarima_configs(seasonal=[0], trend=['c'], p_params = [0, 1, 2, 3],q_params = [0, 1, 2, 3],
-                              P_params = [0, 1, 2, 3], Q_params = [0, 1, 2, 3])
+    cfg_list = sarima_configs(seasonal=[0], trend=['c', 'ct'], p_params = [0, 1, 2],q_params = [0, 1, 2],
+                              P_params = [0, 1, 2], Q_params = [0, 1, 2])
 
     scores = grid_search(data, cfg_list, n_test)
 
@@ -144,8 +143,8 @@ if __name__ == '__main__':
 
     data = read_csv('gridsearch_data/co2range.csv').CO2filled.values
 
-    cfg_list = sarima_configs(seasonal=[0,12], trend=['ct'], p_params = [0, 1, 2, 3],q_params = [0, 1, 2, 3],
-                              P_params = [0, 1, 2, 3], Q_params = [0, 1, 2, 3])
+    cfg_list = sarima_configs(seasonal=[12], trend=['ct'], p_params = [0, 1, 2],q_params = [0, 1, 2],
+                              P_params = [0, 1, 2], Q_params = [0, 1, 2])
 
     scores = grid_search(data, cfg_list, n_test)
 
@@ -160,8 +159,7 @@ if __name__ == '__main__':
 
     data = read_csv('gridsearch_data/ensorange.csv').ANOM.values
 
-    cfg_list = sarima_configs(seasonal=[0], trend=['n','c','t','ct'], p_params = [0, 1, 2, 3],q_params = [0, 1, 2, 3],
-                              P_params = [0, 1, 2, 3], Q_params = [0, 1, 2, 3])
+    cfg_list = sarima_configs(seasonal=[0], trend=['n', 't','c', 'ct'], p_params = [0, 1, 2],q_params = [0, 1, 2])
 
     scores = grid_search(data, cfg_list, n_test)
 
@@ -176,8 +174,7 @@ if __name__ == '__main__':
 
     data = read_csv('gridsearch_data/spotsrange.csv').SNvalue.values
 
-    cfg_list = sarima_configs(seasonal=[0], trend=['n','c','t','ct'], p_params = [0, 1, 2, 3],q_params = [0, 1, 2, 3],
-                              P_params = [0, 1, 2, 3], Q_params = [0, 1, 2, 3])
+    cfg_list = sarima_configs(seasonal=[0], trend=['n', 't','c', 'ct'], p_params = [0, 1, 2],q_params = [0, 1, 2])
 
     scores = grid_search(data, cfg_list, n_test)
 
