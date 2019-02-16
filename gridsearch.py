@@ -91,16 +91,17 @@ def grid_search(data, cfg_list, n_test, parallel=True):
 	return scores
 
 # create a set of sarima configs to try
-def sarima_configs(seasonal=[0], trend=['n','c','t','ct']):
+def sarima_configs(seasonal=[0], trend=['n','c','t','ct'],p_params = [0, 1, 2],q_params = [0, 1, 2],
+                  P_params = [0, 1, 2], Q_params = [0, 1, 2]):
 	models = list()
 	# define config lists
-	p_params = [0, 1, 2]
+	p_params = p_params
 	d_params = [0, 1]
-	q_params = [0, 1, 2]
+	q_params = q_params
 	t_params = trend
-	P_params = [0, 1, 2]
+	P_params = P_params
 	D_params = [0, 1]
-	Q_params = [0, 1, 2]
+	Q_params = Q_params
 	m_params = seasonal
 	# create config instances
 	for p in p_params:
@@ -116,48 +117,77 @@ def sarima_configs(seasonal=[0], trend=['n','c','t','ct']):
 	return models
 
 if __name__ == '__main__':
-  print('fefe')
-  if sys.argv[1] == 'anomalyrange.csv':
-    
-    data = read_csv('gridsearch_data/anomalyrange.csv').anomaly
-    print(data)
-    n_test = 12
 
-    cfg_list = sarima_configs(seasonal=[0, 12], trend=['c'] )
+  n_test = 12*6
+
+  filename = sys.argv[1]
+  filename = 'co2range.csv'
+
+  #sys.argv[1]
+  if filename == 'anomalyrange.csv':
+    
+    data = read_csv('gridsearch_data/anomalyrange.csv').anomaly.values
+
+    cfg_list = sarima_configs(seasonal=[0], trend=['c'], p_params = [0, 1, 2, 3],q_params = [0, 1, 2, 3],
+                              P_params = [0, 1, 2, 3], Q_params = [0, 1, 2, 3])
 
     scores = grid_search(data, cfg_list, n_test)
 
     print(scores)
-    print("dsdasd")
+
+    print('Best for co2range')
 
     for cfg, error in scores[:3]:
 	    print(cfg, error)
 
-  elif sys.argv[1] == 'co2range.csv':
-    print("laa laa")
+  elif filename == 'co2range.csv':
+
+    data = read_csv('gridsearch_data/co2range.csv').CO2filled.values
+
+    cfg_list = sarima_configs(seasonal=[0,12], trend=['ct'], p_params = [0, 1, 2, 3],q_params = [0, 1, 2, 3],
+                              P_params = [0, 1, 2, 3], Q_params = [0, 1, 2, 3])
+
+    scores = grid_search(data, cfg_list, n_test)
+
+    print(scores)
+
+    print('Best for co2range')
+
+    for cfg, error in scores[:3]:
+	    print(cfg, error)
   
-  elif sys.argv[1] == 'ensorange.csv':
-    print("laa laa")
+  elif filename == 'ensorange.csv':
+
+    data = read_csv('gridsearch_data/ensorange.csv').ANOM.values
+
+    cfg_list = sarima_configs(seasonal=[0], trend=['n','c','t','ct'], p_params = [0, 1, 2, 3],q_params = [0, 1, 2, 3],
+                              P_params = [0, 1, 2, 3], Q_params = [0, 1, 2, 3])
+
+    scores = grid_search(data, cfg_list, n_test)
+
+    print(scores)
+
+    print('Best for ensorange')
+
+    for cfg, error in scores[:3]:
+	    print(cfg, error)
   
-  elif sys.argv[1] == 'spotsrange.csv':
-    print("laa laa")
+  elif filename == 'spotsrange.csv':
+
+    data = read_csv('gridsearch_data/spotsrange.csv').SNvalue.values
+
+    cfg_list = sarima_configs(seasonal=[0], trend=['n','c','t','ct'], p_params = [0, 1, 2, 3],q_params = [0, 1, 2, 3],
+                              P_params = [0, 1, 2, 3], Q_params = [0, 1, 2, 3])
+
+    scores = grid_search(data, cfg_list, n_test)
+
+    print(scores)
+
+    print('Best for spotsrange')
+
+    for cfg, error in scores[:3]:
+	    print(cfg, error)
 
   else:
     print("No file found")
 
-  #for arg in sys.argv[1:]:
-  #  print (arg)
-
-	# define dataset
-  #data = [10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0]
-  #print(data)
-	# data split
-  #n_test = 4
-	# model configs
-  #cfg_list = sarima_configs()
-	# grid search
-  #scores = grid_search(data, cfg_list, n_test)
-  #print('done')
-	# list top 3 configs
-  #for cfg, error in scores[:3]:
-	#  print(cfg, error)
