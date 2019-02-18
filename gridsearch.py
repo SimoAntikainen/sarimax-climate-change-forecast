@@ -120,9 +120,8 @@ if __name__ == '__main__':
 
   n_test = 12*6
 
-  #filename = sys.argv[1] edit this in to run from command line
-  filename = 'co2range.csv'
-
+  filename = sys.argv[1] 
+  
   if filename == 'anomalyrange.csv':
     
     data = read_csv('gridsearch_data/anomalyrange.csv').anomaly.values
