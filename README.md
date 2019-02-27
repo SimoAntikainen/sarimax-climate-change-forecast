@@ -4,7 +4,7 @@ SARIMAX-models have been used to predict climate locally at short time scales. T
 
 ## Prequisites
 
-`pip install numpy pandas matplotlib sklearn statsmodelspmdarima`
+`pip install numpy pandas matplotlib sklearn statsmodels pmdarima`
 
 ## Data Sources
 
